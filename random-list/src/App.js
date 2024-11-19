@@ -9,7 +9,7 @@ function App() {
       <div className="container">
         <div className="left-section">
           <Todo />
-        </div>
+         </div>
         <div className="right-section">
           <Random />
         </div>
