@@ -52,7 +52,7 @@ class RandomTextList extends Component {
         <h2>Random Text List</h2>
         <ul>
           {this.state.randomTexts.length === 0 ? (
-            <li>Loading...</li>
+            <li>Inprogress...............</li>
           ) : (
             this.state.randomTexts.map((text, index) => <li key={index}>{text}</li>)
           )}
