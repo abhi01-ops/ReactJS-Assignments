@@ -1,21 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import Todo from './Component1';
-import Random from './Component2';
+import TodoList from './Todo';
+import RandomTextList from './Random';
 
-function App() {
-  return (
-    <div className="App">
-      <div className="container">
-        <div className="left-section">
-          <Todo />
-         </div>
-        <div className="right-section">
-          <Random />
+class App extends Component {
+  render() {
+    return (
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <div style={{ width: "45%" }}>
+          <TodoList />
+        </div>
+        <div style={{ width: "45%" }}>
+          <RandomTextList />
         </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 export default App;
