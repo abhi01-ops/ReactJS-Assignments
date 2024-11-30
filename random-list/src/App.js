@@ -1,21 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
-import TodoList from './Todo';
-import RandomTextList from './Random';
+import ParentComponent from './ParentComponent';
 
-class App extends Component {
-  render() {
-    return (
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <div style={{ width: "45%" }}>
-          <TodoList />
-        </div>
-        <div style={{ width: "45%" }}>
-          <RandomTextList />
-        </div>
-      </div>
-    );
-  }
+function App() {
+  return <ParentComponent />;
 }
 
 export default App;

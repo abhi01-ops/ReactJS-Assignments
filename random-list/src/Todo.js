@@ -1,46 +1,61 @@
 import React, { Component } from 'react';
 
-class TodoList extends Component {
-  constructor(props) {
-    super(props);
-    // Initialize state with pre-defined TODO items
-    this.state = {
-      todos: [
-        { text: "TASK1" },
-        { text: "TASK2" },
-        { text: "TASK3" },
-        { text: "TASK4" },
-        { text: "TASK5" },
-      ],
-    };
-  }
+export default class Todo extends Component {
+  state = {
+    newTodo: '',
+    editIndex: -1,
+    editValue: '',
+  };
 
-
-  componentDidMount() {
-    console.log("Mounted TodoList.......");
-  }
-
-  componentDidUpdate(prevProps, prevState) {
-    if (prevState.todos !== this.state.todos) {
-      console.log("Updated TodoList.......");
+  handleAddTodo = () => {
+    if (this.state.newTodo.trim()) {
+      this.props.addTodo(this.state.newTodo);
+      this.setState({ newTodo: '' });
     }
-  }
+  };
 
-  componentWillUnmount() {
-    console.log("Unmount TodoList.......");
-  }
+  handleEditTodo = (index) => {
+    this.setState({ editIndex: index, editValue: this.props.todos[index] });
+  };
+
+  handleSaveEdit = () => {
+    this.props.editTodo(this.state.editIndex, this.state.editValue);
+    this.setState({ editIndex: -1, editValue: '' });
+  };
+
   render() {
     return (
-      <div>
+      <div className="todo-list">
         <h2>TODO List</h2>
         <ul>
-          {this.state.todos.map((todo, index) => (
-            <li key={index}>{todo.text}</li>
+          {this.props.todos.map((todo, index) => (
+            <li key={index}>
+              {this.state.editIndex === index ? (
+                <input
+                  type="text"
+                  value={this.state.editValue}
+                  onChange={(e) => this.setState({ editValue: e.target.value })}
+                />
+              ) : (
+                todo
+              )}
+              <button onClick={() => this.props.deleteTodo(index)}>Delete</button>
+              {this.state.editIndex === index ? (
+                <button onClick={this.handleSaveEdit}>Save</button>
+              ) : (
+                <button onClick={() => this.handleEditTodo(index)}>Edit</button>
+              )}
+            </li>
           ))}
         </ul>
+        <input
+          type="text"
+          value={this.state.newTodo}
+          onChange={(e) => this.setState({ newTodo: e.target.value })}
+          placeholder="Add new TODO"
+        />
+        <button onClick={this.handleAddTodo}>Add</button>
       </div>
     );
   }
 }
-
-export default TodoList;
