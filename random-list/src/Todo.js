@@ -1,61 +1,61 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 
-export default class Todo extends Component {
-  state = {
-    newTodo: '',
-    editIndex: -1,
-    editValue: '',
-  };
+const Todo = ({ todos, addTodo, deleteTodo, editTodo }) => {
+  const [newTodo, setNewTodo] = useState('');
+  const [editIndex, setEditIndex] = useState(-1);
+  const [editValue, setEditValue] = useState('');
 
-  handleAddTodo = () => {
-    if (this.state.newTodo.trim()) {
-      this.props.addTodo(this.state.newTodo);
-      this.setState({ newTodo: '' });
+  const handleAddTodo = () => {
+    if (newTodo.trim()) {
+      addTodo(newTodo);
+      setNewTodo('');
     }
   };
 
-  handleEditTodo = (index) => {
-    this.setState({ editIndex: index, editValue: this.props.todos[index] });
+  const handleEditTodo = (index) => {
+    setEditIndex(index);
+    setEditValue(todos[index]);
   };
 
-  handleSaveEdit = () => {
-    this.props.editTodo(this.state.editIndex, this.state.editValue);
-    this.setState({ editIndex: -1, editValue: '' });
+  const handleSaveEdit = () => {
+    editTodo(editIndex, editValue);
+    setEditIndex(-1);
+    setEditValue('');
   };
 
-  render() {
-    return (
-      <div className="todo-list">
-        <h2>TODO List</h2>
-        <ul>
-          {this.props.todos.map((todo, index) => (
-            <li key={index}>
-              {this.state.editIndex === index ? (
-                <input
-                  type="text"
-                  value={this.state.editValue}
-                  onChange={(e) => this.setState({ editValue: e.target.value })}
-                />
-              ) : (
-                todo
-              )}
-              <button onClick={() => this.props.deleteTodo(index)}>Delete</button>
-              {this.state.editIndex === index ? (
-                <button onClick={this.handleSaveEdit}>Save</button>
-              ) : (
-                <button onClick={() => this.handleEditTodo(index)}>Edit</button>
-              )}
-            </li>
-          ))}
-        </ul>
-        <input
-          type="text"
-          value={this.state.newTodo}
-          onChange={(e) => this.setState({ newTodo: e.target.value })}
-          placeholder="Add new TODO"
-        />
-        <button onClick={this.handleAddTodo}>Add</button>
-      </div>
-    );
-  }
-}
+  return (
+    <div className="todo-list">
+      <h2>TODO List</h2>
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>
+            {editIndex === index ? (
+              <input
+                type="text"
+                value={editValue}
+                onChange={(e) => setEditValue(e.target.value)}
+              />
+            ) : (
+              todo
+            )}
+            <button onClick={() => deleteTodo(index)}>Delete</button>
+            {editIndex === index ? (
+              <button onClick={handleSaveEdit}>Save</button>
+            ) : (
+              <button onClick={() => handleEditTodo(index)}>Edit</button>
+            )}
+          </li>
+        ))}
+      </ul>
+      <input
+        type="text"
+        value={newTodo}
+        onChange={(e) => setNewTodo(e.target.value)}
+        placeholder="Add new TODO"
+      />
+      <button onClick={handleAddTodo}>Add</button>
+    </div>
+  );
+};
+
+export default Todo;
