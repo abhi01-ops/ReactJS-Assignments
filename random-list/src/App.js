@@ -1,18 +1,19 @@
 import React from "react";
-import TodoForm from "./TodoForm";
+import { useRoutes } from "react-router-dom";
+import Login from "./Login";
 import Todo from "./Todo";
-import { TodoProvider } from "./TodoContext";
+import AddTodo from "./AddTodo";
+import CompletedTodos from "./CompletedTodos";
 
 const App = () => {
-  return (
-    <TodoProvider>
-      <div style={{ padding: "20px" }}>
-        <h1>TODO Application</h1>
-        <TodoForm />
-        <Todo />
-      </div>
-    </TodoProvider>
-  );
+  const routes = useRoutes([
+    { path: "/login", element: <Login /> },
+    { path: "/todos", element: <Todo /> },
+    { path: "/add-todo", element: <AddTodo /> },
+    { path: "/completed-todos", element: <CompletedTodos /> },
+  ]);
+
+  return <>{routes}</>;
 };
 
 export default App;

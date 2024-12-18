@@ -1,20 +1,23 @@
-import React, { useContext } from "react";
-import { TodoContext } from "./TodoContext";
+import React from "react";
+import { Link } from "react-router-dom";
 
-const Todo = () => {
-  const { state } = useContext(TodoContext);
-
-  if (!state?.todos?.length) {
-    return <p>Invalid Todo</p>;
-  }
+const TodoList = () => {
+  const todos = JSON.parse(localStorage.getItem("todos")) || [];
 
   return (
-    <ul>
-      {state.todos.map((todo) => (
-        <li key={todo.id}>{todo.text}</li>
-      ))}
-    </ul>
+    <div>
+      <h2>All TODOs</h2>
+      <ul>
+        {todos.map((todo, index) => (
+          <li key={index}>
+            <Link to={`/todos/${todo.id}`}>{todo.text}</Link>
+          </li>
+        ))}
+      </ul>
+      <Link to="/add-todo">Add TODO</Link>
+      <Link to="/completed-todos">Completed TODOs</Link>
+    </div>
   );
 };
 
-export default Todo;
+export default TodoList;
